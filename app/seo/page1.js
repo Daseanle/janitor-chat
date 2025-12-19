@@ -1,5 +1,11 @@
 import Link from "next/link";
 
+export const metadata = {
+  title: "AI Character Chat Tips - Janitor AI",
+  description: "Discover top AI character prompts and start chatting with AI today.",
+  keywords: "AI chat, AI character, AI prompts, roleplay AI, Janitor AI"
+};
+
 export default function SEOPage1() {
   return (
     <main style={{ padding: 40, textAlign: "center" }}>
