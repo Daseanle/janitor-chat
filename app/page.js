@@ -3,13 +3,10 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main style={{ padding: 40, textAlign: "center" }}>
-      <h1 style={{ fontSize: "2.5rem", marginBottom: 20 }}>
-        Janitor AI Chat
-      </h1>
+      <h1 style={{ fontSize: "2.5rem", marginBottom: 20 }}>Janitor AI Chat</h1>
       <p style={{ fontSize: "1.2rem", lineHeight: 1.7, opacity: 0.8 }}>
         Experience AI character chat and roleplay prompts. Start chatting now!
       </p>
-
       <div style={{ marginTop: 30 }}>
         <Link href="/redirect">
           <button
