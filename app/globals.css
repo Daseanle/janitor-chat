@@ -6,3 +6,12 @@ body {
   background: #0b0b0f;
   color: #ffffff;
 }
+
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background-color: #5a4bd8;
+}
