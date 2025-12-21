@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import "./globals.css"; // 👈 这行代码让样式生效！
+import "./globals.css"; // 👈 引用同级目录下的 globals.css
 
 const inter = Inter({ subsets: ["latin"] });
 
