@@ -1,39 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://janitor-ai.chat/</loc>
+    <loc>https://www.janitor-ai.chat/</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://janitor-ai.chat/redirect</loc>
+    <loc>https://www.janitor-ai.chat/seo/best-janitor-ai-alternatives</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://janitor-ai.chat/seo/page1</loc>
+    <loc>https://www.janitor-ai.chat/seo/is-janitor-ai-down</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://janitor-ai.chat/seo/page2</loc>
-  </url>
-  <url>
-    <loc>https://janitor-ai.chat/seo/page3</loc>
-  </url>
-  <url>
-    <loc>https://janitor-ai.chat/seo/page4</loc>
-  </url>
-  <url>
-    <loc>https://janitor-ai.chat/seo/page5</loc>
-  </url>
-  <url>
-    <loc>https://janitor-ai.chat/seo/page6</loc>
-  </url>
-  <url>
-    <loc>https://janitor-ai.chat/seo/page7</loc>
-  </url>
-  <url>
-    <loc>https://janitor-ai.chat/seo/page8</loc>
-  </url>
-  <url>
-    <loc>https://janitor-ai.chat/seo/page9</loc>
-  </url>
-  <url>
-    <loc>https://janitor-ai.chat/seo/page10</loc>
+    <loc>https://www.janitor-ai.chat/seo/candy-ai-vs-janitor-ai</loc>
+    <lastmod>2025-12-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
