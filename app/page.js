@@ -219,7 +219,61 @@ export default function Home() {
 
         </div>
       </article>
+      {/* 内部链接区域 - SEO 关键！让爬虫顺着爬到子页面 */}
+      <section className="py-20 bg-[#0f0f12] border-t border-gray-800">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <h3 className="text-2xl font-bold text-white mb-8 text-center">Latest Guides & Comparisons</h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            
+            {/* 竞品对比类 */}
+            <Link href="/seo/janitor-ai-vs-chai-app" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-pink-500/50 transition-all group">
+              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Comparison</span>
+              <span className="text-white group-hover:text-pink-400 font-medium">Janitor AI vs Chai App: Which is Better? &rarr;</span>
+            </Link>
+            <Link href="/seo/janitor-ai-vs-spicy-chat" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-pink-500/50 transition-all group">
+              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Comparison</span>
+              <span className="text-white group-hover:text-pink-400 font-medium">Janitor AI vs Spicy Chat: Queue Times & Features &rarr;</span>
+            </Link>
+            <Link href="/seo/janitor-ai-vs-yodayo" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-pink-500/50 transition-all group">
+              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Comparison</span>
+              <span className="text-white group-hover:text-pink-400 font-medium">Janitor AI vs Yodayo: Censorship Update &rarr;</span>
+            </Link>
+            <Link href="/seo/character-ai-vs-janitor-ai" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-pink-500/50 transition-all group">
+              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Comparison</span>
+              <span className="text-white group-hover:text-pink-400 font-medium">Character AI vs Janitor AI: NSFW Guide &rarr;</span>
+            </Link>
 
+            {/* 修复指南类 */}
+            <Link href="/seo/fix-janitor-ai-load-failed" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-blue-500/50 transition-all group">
+              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Troubleshooting</span>
+              <span className="text-white group-hover:text-blue-400 font-medium">How to Fix "Load Failed" Error &rarr;</span>
+            </Link>
+            <Link href="/seo/janitor-ai-blank-response" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-blue-500/50 transition-all group">
+              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Troubleshooting</span>
+              <span className="text-white group-hover:text-blue-400 font-medium">Fixing Blank/Empty Responses &rarr;</span>
+            </Link>
+            <Link href="/seo/janitor-ai-llm-error-fix" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-blue-500/50 transition-all group">
+              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Troubleshooting</span>
+              <span className="text-white group-hover:text-blue-400 font-medium">"LLM Error" Explained & Solved &rarr;</span>
+            </Link>
+
+            {/* 资源类 */}
+            <Link href="/seo/janitor-ai-app-ios-android" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-green-500/50 transition-all group">
+              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Download</span>
+              <span className="text-white group-hover:text-green-400 font-medium">Janitor AI App: iOS & Android APK Status &rarr;</span>
+            </Link>
+            <Link href="/seo/janitor-ai-free-api-key" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-green-500/50 transition-all group">
+              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Guide</span>
+              <span className="text-white group-hover:text-green-400 font-medium">How to use Janitor AI for Free (No API Key) &rarr;</span>
+            </Link>
+            <Link href="/seo/best-ai-girlfriend-sites" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-green-500/50 transition-all group">
+              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Top List</span>
+              <span className="text-white group-hover:text-green-400 font-medium">5 Best AI Girlfriend Sites (2025) &rarr;</span>
+            </Link>
+
+          </div>
+        </div>
+      </section>
       {/* Footer - 法律护身符 */}
       <footer className="py-12 border-t border-gray-800 text-center text-gray-600 text-sm bg-[#0a0a0c]">
         <div className="container mx-auto px-4">
