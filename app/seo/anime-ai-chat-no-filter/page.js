@@ -6,7 +6,7 @@ export const metadata = {
 };
 
 export default function Page() {
-  const AFFILIATE_LINK = "https://candy.ai?via=yourcode";
+  const AFFILIATE_LINK = "https://www.ejd1s4io.com/MF3W3H/3QQG7/";
 
   return (
     <div className="min-h-screen bg-[#0f0f12] text-gray-300 font-sans">
