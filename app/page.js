@@ -4,7 +4,7 @@ import { CheckCircle2, XCircle, Zap, ShieldAlert, ArrowRight, Star, AlertTriangl
 export default function Home() {
   // 🔴 核心修改点：把这里换成你申请到的 Candy.ai 真实推广链接
   // 如果还没批下来，暂时填 Candy 官网首页，或者填你上一版代码里的链接
-  const AFFILIATE_LINK = "https://candy.ai?via=yourcode"; 
+  const AFFILIATE_LINK = "https://www.ejd1s4io.com/MF3W3H/3QQG7/"; 
   
   // 获取当前日期，让SEO标题看起来像最新的
   const currentDate = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
