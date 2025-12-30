@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 export default function Page() {
-  const AFFILIATE_LINK = "https://candy.ai?via=yourcode"; // 🔴 换成你的链接
+  const AFFILIATE_LINK = "https://www.ejd1s4io.com/MF3W3H/3QQG7/"; // 🔴 换成你的链接
   const date = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 
   return (
