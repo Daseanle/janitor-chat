@@ -1,17 +1,17 @@
+import { seoPages } from "./lib/seo-data"; // 👈 引入自动化数据源
 import Link from "next/link";
 import { CheckCircle2, XCircle, Zap, ShieldAlert, ArrowRight, Star, AlertTriangle, Server, Users, Lock } from "lucide-react";
 
 export default function Home() {
-  // 🔴 核心修改点：把这里换成你申请到的 Candy.ai 真实推广链接
-  // 如果还没批下来，暂时填 Candy 官网首页，或者填你上一版代码里的链接
+  // ✅ 已替换为你的真实 Affiliate 链接
   const AFFILIATE_LINK = "https://www.ejd1s4io.com/MF3W3H/3QQG7/"; 
   
-  // 获取当前日期，让SEO标题看起来像最新的
+  // 获取当前日期
   const currentDate = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 
   return (
     <main className="min-h-screen bg-[#0f0f12] text-white selection:bg-pink-500 selection:text-white font-sans">
-      {/* 顶部紧急状态栏 - 制造焦虑 */}
+      {/* 顶部紧急状态栏 */}
       <div className="bg-red-500/10 border-b border-red-500/20 px-4 py-2 text-center text-sm font-medium text-red-200 animate-pulse">
         <span className="flex items-center justify-center gap-2">
           <ShieldAlert className="w-4 h-4" />
@@ -21,7 +21,6 @@ export default function Home() {
 
       {/* Hero 区域 */}
       <section className="relative pt-20 pb-32 overflow-hidden">
-        {/* 背景光效 */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-pink-600/20 rounded-full blur-[120px] -z-10" />
         
         <div className="container mx-auto px-4 text-center max-w-4xl">
@@ -57,7 +56,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 核心对比表格 - 转化神器 */}
+      {/* 核心对比表格 */}
       <section className="py-20 bg-[#16161a]">
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-3xl font-bold text-center mb-4">Why Users Are Switching in 2025</h2>
@@ -127,11 +126,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SEO 深度内容区域 - 专门给 Google 爬虫看的干货 */}
+      {/* SEO 深度内容区域 */}
       <article className="py-24 px-4 bg-[#0f0f12]">
         <div className="container mx-auto max-w-3xl prose prose-invert prose-lg prose-headings:text-gray-100 prose-a:text-pink-400">
           
-          {/* Section 1: 状态分析 (Target Keyword: Is Janitor AI Down) */}
           <div className="mb-16">
             <h2 className="flex items-center gap-3 text-3xl font-bold mb-6 text-white">
               <AlertTriangle className="text-yellow-500" />
@@ -145,17 +143,8 @@ export default function Home() {
               The official Janitor AI servers often struggle to handle the massive influx of traffic, leading to database connection failures and slow LLM response times. 
               While the developers are working on scaling their infrastructure, stability remains a major issue for daily users.
             </p>
-            <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700 mt-6">
-              <h4 className="text-sm font-bold text-gray-300 uppercase tracking-wider mb-2">Common Error Codes:</h4>
-              <ul className="text-sm text-gray-400 list-disc list-inside space-y-1">
-                <li>504 Gateway Time-out</li>
-                <li>"Load Failed" on chat screen</li>
-                <li>LLM API Quota Exceeded</li>
-              </ul>
-            </div>
           </div>
 
-          {/* Section 2: 速度分析 (Target Keyword: Why is Janitor AI slow) */}
           <div className="mb-16">
             <h2 className="flex items-center gap-3 text-3xl font-bold mb-6 text-white">
               <Server className="text-blue-500" />
@@ -167,7 +156,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Section 3: 替代品推荐 (Target Keyword: Uncensored AI Chat Sites) */}
           <div className="mb-16">
             <h2 className="flex items-center gap-3 text-3xl font-bold mb-6 text-white">
               <Users className="text-pink-500" />
@@ -178,29 +166,12 @@ export default function Home() {
             </p>
             
             <div className="space-y-8">
-              {/* Alt 1 */}
               <div className="bg-[#1e1e24] p-6 rounded-xl border border-gray-800">
                 <h3 className="text-xl font-bold text-white mb-2">1. Candy.ai (Editor's Choice)</h3>
                 <p className="text-gray-400 text-sm mb-4">
                   The most advanced AI companion platform in 2025. It offers both realistic and anime styles, photo generation capabilities, and zero censorship on roleplay scenarios. The response time is instant.
                 </p>
                 <a href={AFFILIATE_LINK} target="_blank" rel="nofollow" className="text-pink-400 font-bold hover:text-pink-300 text-sm">Try Candy.ai Free &rarr;</a>
-              </div>
-
-              {/* Alt 2 */}
-              <div className="bg-[#1e1e24] p-6 rounded-xl border border-gray-800">
-                <h3 className="text-xl font-bold text-white mb-2">2. Crushon.AI</h3>
-                <p className="text-gray-400 text-sm mb-4">
-                  A great alternative that focuses on "No Filter" character interactions. It has a large community library of user-created characters similar to Janitor AI.
-                </p>
-              </div>
-
-              {/* Alt 3 */}
-              <div className="bg-[#1e1e24] p-6 rounded-xl border border-gray-800">
-                <h3 className="text-xl font-bold text-white mb-2">3. SoulGen</h3>
-                <p className="text-gray-400 text-sm mb-4">
-                  Unique for its ability to generate visual characters from text prompts. If you want to visualize your AI girlfriend/boyfriend, this is the tool.
-                </p>
               </div>
             </div>
           </div>
@@ -219,61 +190,33 @@ export default function Home() {
 
         </div>
       </article>
-      {/* 内部链接区域 - SEO 关键！让爬虫顺着爬到子页面 */}
+
+      {/* 🔥 自动化内部链接区域 - 你的新武器 */}
       <section className="py-20 bg-[#0f0f12] border-t border-gray-800">
         <div className="container mx-auto px-4 max-w-4xl">
           <h3 className="text-2xl font-bold text-white mb-8 text-center">Latest Guides & Comparisons</h3>
+          
           <div className="grid md:grid-cols-2 gap-4">
-            
-            {/* 竞品对比类 */}
-            <Link href="/seo/janitor-ai-vs-chai-app" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-pink-500/50 transition-all group">
-              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Comparison</span>
-              <span className="text-white group-hover:text-pink-400 font-medium">Janitor AI vs Chai App: Which is Better? &rarr;</span>
-            </Link>
-            <Link href="/seo/janitor-ai-vs-spicy-chat" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-pink-500/50 transition-all group">
-              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Comparison</span>
-              <span className="text-white group-hover:text-pink-400 font-medium">Janitor AI vs Spicy Chat: Queue Times & Features &rarr;</span>
-            </Link>
-            <Link href="/seo/janitor-ai-vs-yodayo" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-pink-500/50 transition-all group">
-              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Comparison</span>
-              <span className="text-white group-hover:text-pink-400 font-medium">Janitor AI vs Yodayo: Censorship Update &rarr;</span>
-            </Link>
-            <Link href="/seo/character-ai-vs-janitor-ai" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-pink-500/50 transition-all group">
-              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Comparison</span>
-              <span className="text-white group-hover:text-pink-400 font-medium">Character AI vs Janitor AI: NSFW Guide &rarr;</span>
-            </Link>
-
-            {/* 修复指南类 */}
-            <Link href="/seo/fix-janitor-ai-load-failed" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-blue-500/50 transition-all group">
-              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Troubleshooting</span>
-              <span className="text-white group-hover:text-blue-400 font-medium">How to Fix "Load Failed" Error &rarr;</span>
-            </Link>
-            <Link href="/seo/janitor-ai-blank-response" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-blue-500/50 transition-all group">
-              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Troubleshooting</span>
-              <span className="text-white group-hover:text-blue-400 font-medium">Fixing Blank/Empty Responses &rarr;</span>
-            </Link>
-            <Link href="/seo/janitor-ai-llm-error-fix" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-blue-500/50 transition-all group">
-              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Troubleshooting</span>
-              <span className="text-white group-hover:text-blue-400 font-medium">"LLM Error" Explained & Solved &rarr;</span>
-            </Link>
-
-            {/* 资源类 */}
-            <Link href="/seo/janitor-ai-app-ios-android" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-green-500/50 transition-all group">
-              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Download</span>
-              <span className="text-white group-hover:text-green-400 font-medium">Janitor AI App: iOS & Android APK Status &rarr;</span>
-            </Link>
-            <Link href="/seo/janitor-ai-free-api-key" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-green-500/50 transition-all group">
-              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Guide</span>
-              <span className="text-white group-hover:text-green-400 font-medium">How to use Janitor AI for Free (No API Key) &rarr;</span>
-            </Link>
-            <Link href="/seo/best-ai-girlfriend-sites" className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-green-500/50 transition-all group">
-              <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">Top List</span>
-              <span className="text-white group-hover:text-green-400 font-medium">5 Best AI Girlfriend Sites (2025) &rarr;</span>
-            </Link>
-
+            {/* 这里的代码会自动从 seo-data.js 读取所有页面！不用手写了！ */}
+            {seoPages.map((page) => (
+              <Link 
+                key={page.slug} 
+                href={`/seo/${page.slug}`} 
+                className="p-4 bg-[#1e1e24] rounded-lg border border-gray-800 hover:border-pink-500/50 transition-all group"
+              >
+                <span className="text-gray-400 text-xs uppercase tracking-wider block mb-1">
+                  {page.category}
+                </span>
+                <span className="text-white group-hover:text-pink-400 font-medium">
+                  {page.title} &rarr;
+                </span>
+              </Link>
+            ))}
           </div>
+          
         </div>
       </section>
+
       {/* Footer - 法律护身符 */}
       <footer className="py-12 border-t border-gray-800 text-center text-gray-600 text-sm bg-[#0a0a0c]">
         <div className="container mx-auto px-4">
