@@ -1,26 +1,25 @@
-// app/sitemap.js
 import { seoPages } from "./lib/seo-data";
 
 export default function sitemap() {
   const baseUrl = 'https://www.janitor-ai.chat';
 
-  // 1. 生成首页
+  // 基础页面
   const routes = [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-  ];
+    '', // 首页
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 1,
+  }));
 
-  // 2. 自动把 seo-data.js 里的所有页面生成出来
-  const posts = seoPages.map((page) => ({
+  // 自动生成的 SEO 页面
+  const seoRoutes = seoPages.map((page) => ({
     url: `${baseUrl}/seo/${page.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly',
     priority: 0.8,
   }));
 
-  return [...routes, ...posts];
+  return [...routes, ...seoRoutes];
 }
