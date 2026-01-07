@@ -262,6 +262,27 @@ def git_push(message):
         subprocess.run(["git", "push"], check=True, cwd=PROJECT_ROOT)
     except: pass
 
+
+# --- TELEGRAM NOTIFICATION ---
+TELEGRAM_TOKEN = "7879788099:AAH7fT5ClqevXiwzD1gNzk9nj7bE1koUnMk"
+TELEGRAM_CHAT_ID = "7551442992"
+
+def send_telegram_notification(message):
+    """
+    Sends a notification to Telegram.
+    """
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    payload = {
+        "chat_id": TELEGRAM_CHAT_ID,
+        "text": message,
+        "parse_mode": "Markdown"
+    }
+    try:
+        requests.post(url, json=payload, timeout=5)
+        print("📱 Telegram notification sent.")
+    except Exception as e:
+        print(f"⚠️ Telegram Error: {e}")
+
 def main():
     if not os.path.exists(DATA_DIR): os.makedirs(DATA_DIR)
     
@@ -305,6 +326,12 @@ def main():
     # Git
     if generated_slugs:
         git_push(f"Auto-SEO Pro: {len(generated_slugs)} new articles")
+        
+        # Telegram Notify
+        msg = f"✅ *Auto-SEO Report*\n\nGenerated {len(generated_slugs)} new articles:\n"
+        for slug in generated_slugs:
+            msg += f"- `{slug}`\n"
+        send_telegram_notification(msg)
     
     print("✅ Done.")
 

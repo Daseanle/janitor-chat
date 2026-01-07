@@ -157,4 +157,10 @@ export const seoPages = [
   { slug: "janitor-ai-load-failed-fix-2026", title: "Fixing Janitor Ai Load Failed Fix 2026: A Faster Method (2026)", category: "Guide" },
 
   { slug: "crushon-ai-review-2026", title: "Crushon Ai Review 2026: Ultimate Review 2026", category: "Guide" },
+
+  { slug: "janitor-ai-settings-guide-2026", title: "Janitor Ai Settings Guide 2026: Ultimate Review 2026", category: "Guide" },
+
+  { slug: "spicy-chat-wait-time-2026", title: "Fixing Spicy Chat Wait Time 2026: A Faster Method (2026)", category: "Guide" },
+
+  { slug: "janitor-ai-slow-response-2026", title: "Fixing Janitor Ai Slow Response 2026: A Faster Method (2026)", category: "Guide" },
 ];
