@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://janitor-ai.chat/sitemap.xml
