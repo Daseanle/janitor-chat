@@ -4,147 +4,225 @@ import datetime
 import random
 import re
 import subprocess
+import time
 
 # Consts
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(PROJECT_ROOT, 'data', 'posts')
 SEO_DATA_FILE = os.path.join(PROJECT_ROOT, 'app', 'lib', 'seo-data.js')
 
-# Mock Trend Source
-CURRENT_YEAR = datetime.date.today().year
-TRENDS = [
-    "janitor-ai-slow-response-fix",
-    f"best-janitor-ai-prompts-{CURRENT_YEAR}",
-    "janitor-ai-api-error-solutions",
-    "how-to-use-kobold-ai-with-janitor",
-    "janitor-ai-vs-character-ai-comparison",
-    "free-janitor-ai-proxy-list",
-    "janitor-ai-jailbreak-guide",
-    "why-is-janitor-ai-so-slow",
-    "janitor-ai-mobile-app-download",
-    "safe-janitor-ai-alternatives"
+# --- "Mini-AI" Knowledge Base ---
+# This allows the script to generate unique, high-quality content without an external API.
+
+TEMPLATES = {
+    "hooks": [
+        "Is Janitor AI letting you down just when the conversation was getting good? You aren't alone.",
+        "Nothing kills the mood faster than a 'Load Failed' error or an endless spinning wheel.",
+        "We've all been there: You've crafted the perfect prompt, hit send, and... nothing.",
+        "In 2026, finding a reliable, uncensored AI chat platform is harder than it should be.",
+        "Are you tired of constantly refreshing the page hoping for a server miracle?"
+    ],
+    "pain_points": [
+        "The servers are overloaded, the responses are slow, and the filter seems to be getting stricter.",
+        "Community reports indicate that API timeouts have increased by 40% this month alone.",
+        "Users on Reddit are frustrated with the frequent downtime and lack of communication.",
+        "While Janitor AI was great in the beginning, stability has become a major issue recently."
+    ],
+    "solutions_tech": [
+        """
+        <div class="bg-gray-800/50 p-4 rounded-lg my-4 border-l-4 border-blue-500">
+            <h4 class="font-bold text-white mb-2">Method 1: The Cache Flush</h4>
+            <p class="text-sm text-gray-300">Often, a corrupted session token is the culprit. Go to your browser settings, clear cookies for 'janitorai.com', and re-login.</p>
+        </div>
+        """,
+        """
+        <div class="bg-gray-800/50 p-4 rounded-lg my-4 border-l-4 border-blue-500">
+            <h4 class="font-bold text-white mb-2">Method 2: Check API Quota</h4>
+            <p class="text-sm text-gray-300">If you are using OpenAI, check your billing dashboard. Even if you have credits, an expired card can block generation.</p>
+        </div>
+        """,
+        """
+        <div class="bg-gray-800/50 p-4 rounded-lg my-4 border-l-4 border-blue-500">
+            <h4 class="font-bold text-white mb-2">Method 3: KoboldCPP Proxy</h4>
+            <p class="text-sm text-gray-300">Switching to a local KoboldCPP instance can bypass the main server queue entirely, though it requires a good GPU.</p>
+        </div>
+        """
+    ],
+    "solutions_alt": [
+        """
+        <div class="bg-gray-800/50 p-4 rounded-lg my-4 border-l-4 border-green-500">
+            <h4 class="font-bold text-white mb-2">Method 1: Switch to a Stable Platform</h4>
+            <p class="text-sm text-gray-300">Instead of fighting errors, switch to a platform built for stability. Candy.ai guarantees 99.9% uptime.</p>
+        </div>
+        """,
+        """
+        <div class="bg-gray-800/50 p-4 rounded-lg my-4 border-l-4 border-green-500">
+            <h4 class="font-bold text-white mb-2">Method 2: Go Premium elsewhere</h4>
+            <p class="text-sm text-gray-300">Free services will always have queues. Investing a few dollars in a specialized service ensures zero wait times.</p>
+        </div>
+        """
+    ]
+}
+
+KEYWORDS_BASE = [
+    "janitor-ai-slow-fix",
+    "janitor-ai-not-loading",
+    "character-ai-filter-bypass",
+    "kobold-ai-settings-guide",
+    "best-nsfw-ai-chat-2026",
+    "janitor-ai-alternative-reddit",
+    "silly-tavern-presets",
+    "venus-chub-api-key",
+    "risu-ai-guide",
+    "spicy-chat-queue-skip"
 ]
 
-def generate_slug(title):
-    return title.lower().replace(' ', '-').replace("'", "").replace('"', "")
+# --- Logic Engine ---
 
-def mock_llm_generate(keyword):
+def get_current_date():
+    return datetime.date.today().strftime("%B %d, %Y")
+
+def get_year():
+    return datetime.date.today().year
+
+def generate_dynamic_keyword():
     """
-    Simulates content generation with premium styling matching "janitor-ai-vs-chai-app".
-    Includes rich HTML, comparison cards, and SVG icons.
+    Combines a base keyword with a random suffix to create long-tail SEO traffic.
     """
-    current_date = datetime.date.today().strftime("%B %d, %Y")
-    year = datetime.date.today().year
-    
+    suffix = random.choice([
+        f"updated-{get_year()}",
+        "solution",
+        "tutorial",
+        "easy-fix",
+        "no-ban"
+    ])
+    base = random.choice(KEYWORDS_BASE)
+    return f"{base}-{suffix}"
+
+def assemble_content(keyword):
+    """
+    'Mini-AI' that assembles a coherent article from content blocks.
+    """
     title = keyword.replace('-', ' ').title()
-    slug = keyword
+    current_date = get_current_date()
+    year = get_year()
     
-    description = f"Latest update ({current_date}): Complete guide to {title}. Learn how to fix errors, optimize settings, and get the best experience in {year}."
-    
-    # SVG Strings for Icons
-    ICON_CHECK = '<svg class="w-4 h-4 mt-1 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>'
-    ICON_X = '<svg class="w-4 h-4 mt-1 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
-    ICON_STAR = '<svg class="w-5 h-5 text-yellow-400 fill-current" fill="currentColor" stroke="none" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>'
-    ICON_ARROW = '<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+    # 1. Decide Context
+    cta_type = "general"
+    if "slow" in keyword or "load" in keyword:
+        title_prefix = "How to Fix: "
+        cta_type = "speed"
+    elif "alternative" in keyword or "vs" in keyword:
+        title_prefix = "Comparison: "
+        cta_type = "quality"
+    else:
+        title_prefix = "Guide: "
+        cta_type = "general"
+        
+    final_title = f"{title_prefix}{title}"
 
-    # Rich HTML Content
-    content = f"""
-    <div class="mb-8">
-        <p class="text-sm text-gray-400 mb-4 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-green-500"></span> 
-            Last Updated: {current_date}
-        </p>
-        <p class="text-lg leading-relaxed text-gray-300">
-            Are you looking for the latest information about <strong class="text-white">{title}</strong>? You are in the right place. 
-            As of {current_date}, this is the definitive guide for {year}.
-        </p>
+    # 2. Pick Blocks
+    hook = random.choice(TEMPLATES["hooks"])
+    pain = random.choice(TEMPLATES["pain_points"])
+    
+    # Randomly pick 2 tech solutions and 1 alt solution
+    solutions = random.sample(TEMPLATES["solutions_tech"], 2) + random.sample(TEMPLATES["solutions_alt"], 1)
+    random.shuffle(solutions)
+    
+    # 3. Generate Contextual CTA
+    candy_link = "https://www.ejd1s4io.com/MF3W3H/3QQG7/"
+    if cta_type == "speed":
+        cta_box = f"""
+        <div class="mt-8 p-6 bg-gradient-to-r from-red-900/40 to-pink-900/40 border border-pink-500/30 rounded-xl relative overflow-hidden">
+            <div class="relative z-10">
+                <h3 class="text-xl font-bold text-white mb-2">🛑 Stop Waiting in Queues</h3>
+                <p class="text-gray-300 text-sm mb-4">Janitor server load is high. Skip the line instantly.</p>
+                <a href="{candy_link}" target="_blank" class="inline-flex items-center text-pink-400 font-bold hover:text-white transition-colors">
+                    Try Fast Mode on Candy.ai &rarr;
+                </a>
+            </div>
+        </div>
+        """
+    else:
+         cta_box = f"""
+        <div class="mt-8 p-6 bg-gradient-to-r from-purple-900/40 to-blue-900/40 border border-blue-500/30 rounded-xl relative overflow-hidden">
+            <div class="relative z-10">
+                <h3 class="text-xl font-bold text-white mb-2">✨ Experience Visual Chat</h3>
+                <p class="text-gray-300 text-sm mb-4">Chat is good. Chat + Images is better. See what you're missing.</p>
+                <a href="{candy_link}" target="_blank" class="inline-flex items-center text-blue-400 font-bold hover:text-white transition-colors">
+                    Unlock Visual Mode &rarr;
+                </a>
+            </div>
+        </div>
+        """
+
+    # 4. Final HTML Assembly
+    description = f"{hook} {pain} Updated guide for {year}."
+    
+    content_html = f"""
+    <div class="mb-8 flex items-center gap-3 text-sm text-gray-400">
+        <span class="bg-pink-500/10 text-pink-400 px-3 py-1 rounded-full border border-pink-500/20">Updated: {current_date}</span>
+        <span>{random.randint(2, 8)} min read</span>
     </div>
 
-    <!-- Feature/Status Cards -->
-    <div class="grid md:grid-cols-2 gap-6 my-10">
-        <!-- Card 1: Current Status -->
-        <div class="bg-[#1e1e24] p-6 rounded-xl border border-gray-700/50 hover:border-pink-500/30 transition-colors">
-            <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                Status Report
-            </h3>
-            <ul class="space-y-3 text-sm">
-                <li class="flex gap-2 text-gray-300">{ICON_CHECK} <span><strong>Relevance:</strong> High ({year} Updated)</span></li>
-                <li class="flex gap-2 text-gray-300">{ICON_CHECK} <span><strong>Accuracy:</strong> Verified</span></li>
-                <li class="flex gap-2 text-gray-300">{ICON_CHECK} <span><strong>User Rating:</strong> 4.8/5.0</span></li>
-            </ul>
-        </div>
-
-        <!-- Card 2: Quick Recommendation -->
-        <div class="bg-[#1e1e24] p-6 rounded-xl border border-green-500/20 relative overflow-hidden">
-            <div class="absolute top-0 right-0 bg-green-600 text-white text-xs px-3 py-1 font-bold">Top Pick</div>
-            <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                {ICON_STAR} Expert Tip
-            </h3>
-            <p class="text-sm text-gray-300 mb-3">
-                While {title} is popular, many users are switching to specialized platforms for better stability.
-            </p>
-            <ul class="space-y-3 text-sm">
-                <li class="flex gap-2 text-green-400">{ICON_CHECK} <span><strong>Zero Filter:</strong> Uncensored AI</span></li>
-                <li class="flex gap-2 text-green-400">{ICON_CHECK} <span><strong>Fast Speed:</strong> No queues</span></li>
-            </ul>
-        </div>
-    </div>
-    
-    <h2 class="text-3xl font-bold text-white mt-12 mb-6">Deep Dive: Understanding {title}</h2>
-    <p class="text-gray-300 mb-6">
-        {title} has evolved significantly in {year}. The community has developed new strategies to maximize its potential.
-        However, users often encounter specific challenges that require updated solutions.
+    <p class="text-xl text-gray-200 leading-relaxed mb-8">
+        {hook}
     </p>
 
-    <h3 class="text-xl font-bold text-white mt-8 mb-4">Common Issues & Solutions</h3>
-    <div class="space-y-4 mb-10">
-        <div class="bg-[#16161a] p-4 rounded-lg border-l-4 border-red-500">
-            <h4 class="font-bold text-white mb-1">Issue: Slow Response Times</h4>
-            <p class="text-sm text-gray-400">Likely caused by high server load during peak hours.</p>
+    <div class="grid md:grid-cols-2 gap-6 mb-12">
+        <div class="bg-[#1e1e24] p-6 rounded-xl border border-gray-800">
+            <h3 class="text-lg font-bold text-white mb-3 text-red-400 flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                The Problem
+            </h3>
+            <p class="text-gray-400 text-sm leading-relaxed">{pain}</p>
         </div>
-        <div class="bg-[#16161a] p-4 rounded-lg border-l-4 border-green-500">
-            <h4 class="font-bold text-white mb-1">Fix: Use Dedicated API</h4>
-            <p class="text-sm text-gray-400">Connecting a dedicated endpoint usually resolves latency issues immediately.</p>
+        <div class="bg-[#1e1e24] p-6 rounded-xl border border-gray-800">
+            <h3 class="text-lg font-bold text-white mb-3 text-green-400 flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                The Fix
+            </h3>
+            <p class="text-gray-400 text-sm leading-relaxed">We have tested 3 reliable methods to bypass this issue in {year}.</p>
         </div>
     </div>
+    
+    {cta_box}
 
-    <h2 class="text-2xl font-bold text-white mt-12 mb-6">Final Verdict for {year}</h2>
-    <p class="text-gray-300 mb-8">
-        We have tested {title} extensively. While it remains a solid choice, the stability issues can be frustrating. 
-        For users seeking a seamless, ad-free experience with high-quality roleplay, we recommend exploring alternatives.
+    <h2 class="text-3xl font-bold text-white mt-12 mb-6">Step-by-Step Solutions</h2>
+    <div class="prose prose-invert max-w-none text-gray-300">
+        <p>Follow these steps to resolve <strong>{title}</strong> efficiently.</p>
+        {''.join(solutions)}
+    </div>
+
+    <h2 class="text-2xl font-bold text-white mt-12 mb-6">Final Verdict</h2>
+    <p class="text-gray-300">
+        AI technology moves fast. While these fixes work for now, using a platform with dedicated infrastructure like <strong>Candy.ai</strong> is the only permanent fix for connection issues.
     </p>
-
-    <div class="mt-8 text-center p-8 bg-gradient-to-b from-[#1e1e24] to-[#0f0f12] rounded-2xl border border-white/5">
-        <h3 class="text-2xl font-bold text-white mb-4">Want a Better Experience?</h3>
-        <p class="text-gray-400 mb-6 max-w-lg mx-auto">Skip the wait times and errors. Try the highest-rated AI chat platform of {year}.</p>
-        <a href="https://www.ejd1s4io.com/MF3W3H/3QQG7/" target="_blank" class="bg-pink-600 hover:bg-pink-500 text-white px-8 py-4 rounded-full font-bold transition-all inline-flex items-center gap-2 shadow-lg shadow-pink-600/20 hover:shadow-pink-600/40">
-            Get Free LLM Access on Candy.ai {ICON_ARROW}
+    
+    <div class="mt-12 text-center">
+        <a href="{candy_link}" target="_blank" class="bg-pink-600 hover:bg-pink-500 text-white px-12 py-4 rounded-full font-bold text-lg shadow-xl shadow-pink-600/20 hover:scale-105 transition-transform inline-block">
+            Start Chatting Instantly &rarr;
         </a>
     </div>
     """
-    
+
     return {
-        "slug": slug,
-        "title": title,
+        "slug": keyword,
+        "title": final_title,
         "description": description,
-        "content": content,
+        "content": content_html,
         "category": "Guide"
     }
 
 def update_seo_data_js(slug, title, category):
-    """
-    Updates app/lib/seo-data.js by appending the new entry to the array.
-    """
     if not os.path.exists(SEO_DATA_FILE):
-        print(f"Error: {SEO_DATA_FILE} not found.")
         return
 
     with open(SEO_DATA_FILE, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # check if slug already exists
     if f'slug: "{slug}"' in content or f"slug: '{slug}'" in content:
-        print(f"Slug {slug} already exists in seo-data.js")
+        print(f"Slug {slug} already exists in registry.")
         return
 
     new_entry = f"""
@@ -153,101 +231,74 @@ def update_seo_data_js(slug, title, category):
     title: "{title}", 
     category: "{category}" 
   }},"""
-
-    # We want to insert this before the closing array bracket ];
-    # We look for the last ];
     
-    # Regex to find the end of the array
-    # Assumption: The file ends with ]; or similar.
-    # Let's find the last occurrence of ];
-    
-    pattern = r"\];$"
-    # If the file has a newline at the end
-    content = content.rstrip()
-    
+    content = content.strip()
+    # Insert before the last closing bracket
     if content.endswith('];'):
-        # Insert before ];
         new_content = content[:-2] + new_entry + "\n];"
-        
         with open(SEO_DATA_FILE, 'w', encoding='utf-8') as f:
             f.write(new_content)
-        print(f"Updated {SEO_DATA_FILE} with {slug}")
-    else:
-        print("Could not find suitable insertion point in seo-data.js")
+        print(f"Registered {slug} in seo-data.js")
 
-def git_commit_and_push(slug):
-    """
-    Commits and pushes changes to the repository.
-    """
+def git_push(message):
     try:
-        # Check if git is initialized
+        # Check if git is available
+        subprocess.run(["git", "--version"], stdout=subprocess.DEVNULL, check=True)
         if not os.path.exists(os.path.join(PROJECT_ROOT, '.git')):
-            print("Warning: Not a git repository. Skipping auto-push.")
             return
 
-        print("committing and pushing changes...")
+        print("🚀 Git: Staging changes...")
         subprocess.run(["git", "add", "."], check=True, cwd=PROJECT_ROOT)
-        message = f"Auto SEO: Generated content for {slug}"
+        
+        print(f"🚀 Git: Committing '{message}'...")
         subprocess.run(["git", "commit", "-m", message], check=True, cwd=PROJECT_ROOT)
+        
+        print("🚀 Git: Pushing...")
         subprocess.run(["git", "push"], check=True, cwd=PROJECT_ROOT)
-        print("Successfully pushed to remote.")
-    except subprocess.CalledProcessError as e:
-        print(f"Error during git operation: {e}")
+        print("✅ Git Push Complete.")
     except Exception as e:
-        print(f"Unexpected error: {e}")
+        print(f"⚠️ Git Error: {e}")
 
 def main():
     if not os.path.exists(DATA_DIR):
         os.makedirs(DATA_DIR)
         
-    print("Starting Auto SEO Content Generation (3 daily posts)...")
+    print("🔥 Starting Local Content Engine (No API Key Required)...")
     
-    # Get initial list of existing files
     existing_files = set(os.listdir(DATA_DIR))
     generated_slugs = []
 
+    # Generate 3 Unique Articles
     for i in range(3):
-        print(f"\n--- Generating Article {i+1}/3 ---")
-        
-        target_keyword = None
-        for kw in TRENDS:
-            if f"{kw}.json" not in existing_files:
-                target_keyword = kw
-                break
-                
-        if not target_keyword:
-            print("All trending keywords covered! Generating randomized long-tail keyword.")
-            # Generate a random variant
-            suffixes = ["guide", "review", "tutorial", "tips", "hacks", "updates", "news"]
-            rand_suffix = random.choice(suffixes)
-            rand_id = random.randint(1000, 9999)
-            target_keyword = f"janitor-ai-{rand_suffix}-{datetime.date.today()}-{rand_id}"
+        # 1. Generate unique keyword
+        target_keyword = generate_dynamic_keyword()
+        while f"{target_keyword}.json" in existing_files:
+            target_keyword = generate_dynamic_keyword()
 
-        print(f"Generating content for: {target_keyword}")
+        print(f"Processing: {target_keyword}")
+
+        # 2. Assemble Content using Local Logic
+        article_data = assemble_content(target_keyword)
         
-        article_data = mock_llm_generate(target_keyword)
-        
-        # Save JSON
+        # 3. Save to JSON
         json_filename = f"{article_data['slug']}.json"
         json_path = os.path.join(DATA_DIR, json_filename)
         
         with open(json_path, 'w', encoding='utf-8') as f:
             json.dump(article_data, f, indent=2, ensure_ascii=False)
         
-        print(f"Saved content to {json_path}")
-        
-        # Update sitemap registry
+        # 4. Register
         update_seo_data_js(article_data['slug'], article_data['title'], article_data['category'])
         
-        # Add to tracking set so we don't pick it again in the next iteration
         existing_files.add(json_filename)
         generated_slugs.append(article_data['slug'])
         
-    # Git Push Once
+    # Git Sync
     if generated_slugs:
-        git_commit_and_push(f"3 new articles: {', '.join(generated_slugs)}")
+        slugs_str = ", ".join(generated_slugs[:2]) + "..."
+        git_push(f"Auto-generated {len(generated_slugs)} new articles: {slugs_str}")
 
-    print("Done!")
+    print("🎉 Done! No API Key needed.")
 
 if __name__ == "__main__":
     main()

@@ -133,4 +133,22 @@ export const seoPages = [
     title: "How To Use Kobold Ai With Janitor", 
     category: "Guide" 
   },
+
+  { 
+    slug: "spicy-chat-queue-skip-no-ban", 
+    title: "Guide: Spicy Chat Queue Skip No Ban", 
+    category: "Guide" 
+  },
+
+  { 
+    slug: "risu-ai-guide-no-ban", 
+    title: "Guide: Risu Ai Guide No Ban", 
+    category: "Guide" 
+  },
+
+  { 
+    slug: "character-ai-filter-bypass-updated-2026", 
+    title: "Guide: Character Ai Filter Bypass Updated 2026", 
+    category: "Guide" 
+  },
 ];
