@@ -151,4 +151,10 @@ export const seoPages = [
     title: "Guide: Character Ai Filter Bypass Updated 2026", 
     category: "Guide" 
   },
+
+  { slug: "silly-tavern-setup-android-2026", title: "Silly Tavern Setup Android 2026: Ultimate Review 2026", category: "Guide" },
+
+  { slug: "janitor-ai-load-failed-fix-2026", title: "Fixing Janitor Ai Load Failed Fix 2026: A Faster Method (2026)", category: "Guide" },
+
+  { slug: "crushon-ai-review-2026", title: "Crushon Ai Review 2026: Ultimate Review 2026", category: "Guide" },
 ];
