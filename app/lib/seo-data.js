@@ -115,4 +115,22 @@ export const seoPages = [
     title: "Best Janitor Ai Prompts 2025",
     category: "Guide"
   },
+
+  { 
+    slug: "best-janitor-ai-prompts-2026", 
+    title: "Best Janitor Ai Prompts 2026", 
+    category: "Guide" 
+  },
+
+  { 
+    slug: "janitor-ai-api-error-solutions", 
+    title: "Janitor Ai Api Error Solutions", 
+    category: "Guide" 
+  },
+
+  { 
+    slug: "how-to-use-kobold-ai-with-janitor", 
+    title: "How To Use Kobold Ai With Janitor", 
+    category: "Guide" 
+  },
 ];
