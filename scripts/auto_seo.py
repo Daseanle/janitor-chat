@@ -286,8 +286,38 @@ def send_telegram_notification(message):
 def main():
     if not os.path.exists(DATA_DIR): os.makedirs(DATA_DIR)
     
-    print("🚀 Auto-SEO Professional: Starting...")
-    
+
+    # Check if we should run a virtual test (for debugging/verification)
+    # If passed as an argument or if we want to force a test run now
+    import sys
+    IS_TEST_RUN = "--test" in sys.argv
+
+    if IS_TEST_RUN:
+        print("\n🧪 RUNNING VIRTUAL TEST (No files will be created)...")
+        test_slugs = ["janitor-ai-settings-guide-2026", "spicy-chat-wait-time-2026", "janitor-ai-slow-response-2026"]
+        
+        # Simulate Trend Fetching
+        print("🌍 Traffic Engine: Scanning Google Trends (SIMULATED)...")
+        time.sleep(1)
+        print("✅ Found hot trend: 'janitor-ai-down-now'")
+
+        # Simulate Generation
+        print("\n--- Post 1/3 (SIMULATED) ---")
+        print(f"Targeting: {test_slugs[0]}")
+        print("📝 Generating E-E-A-T content...")
+        print("✅ Content generated.")
+
+        # Simulate Notification
+        base_url = "https://www.janitor-ai.chat/seo"
+        msg = f"🧪 *Auto-SEO 测试报告*\n\n已生成 3 篇虚拟文章 (测试模式):\n"
+        for slug in test_slugs:
+            link = f"{base_url}/{slug}"
+            msg += f"- [{slug}]({link})\n"
+        send_telegram_notification(msg)
+        
+        print("✅ Virtual Test Completed.")
+        return
+
     # 1. Traffic Strategy
     candidates = get_real_trends()
     existing_files = set(os.listdir(DATA_DIR))
@@ -312,6 +342,7 @@ def main():
         print(f"Targeting: {keyword}")
         
         # 2. Generate
+        # Content remains in English as per templates
         data = generate_article(keyword)
         
         # 3. Save
@@ -328,9 +359,12 @@ def main():
         git_push(f"Auto-SEO Pro: {len(generated_slugs)} new articles")
         
         # Telegram Notify
-        msg = f"✅ *Auto-SEO Report*\n\nGenerated {len(generated_slugs)} new articles:\n"
+        base_url = "https://www.janitor-ai.chat/seo"
+        # Chinese Notification
+        msg = f"✅ *Auto-SEO 自动发布报告*\n\n今日已成功发布 {len(generated_slugs)} 篇新文章 (英文内容):\n"
         for slug in generated_slugs:
-            msg += f"- `{slug}`\n"
+            link = f"{base_url}/{slug}"
+            msg += f"- [{slug}]({link})\n"
         send_telegram_notification(msg)
     
     print("✅ Done.")

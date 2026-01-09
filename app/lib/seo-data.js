@@ -163,4 +163,10 @@ export const seoPages = [
   { slug: "spicy-chat-wait-time-2026", title: "Fixing Spicy Chat Wait Time 2026: A Faster Method (2026)", category: "Guide" },
 
   { slug: "janitor-ai-slow-response-2026", title: "Fixing Janitor Ai Slow Response 2026: A Faster Method (2026)", category: "Guide" },
+
+  { slug: "character-ai-vs-janitor-ai-nsfw-2026", title: "Character Ai Vs Janitor Ai Nsfw 2026 Uncensored Guide 2026", category: "Guide" },
+
+  { slug: "best-janitor-ai-alternatives-2026", title: "Best Janitor Ai Alternatives 2026: Ultimate Review 2026", category: "Guide" },
+
+  { slug: "janitor-ai-update-1767932917", title: "Janitor Ai Update 1767932917: Ultimate Review 2026", category: "Guide" },
 ];
